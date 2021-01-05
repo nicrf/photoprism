@@ -23,8 +23,8 @@ type PeopleResult struct {
 type PeopleResults []PeopleResult
 
 // PeopleByID returns a People based on the ID.
-func PeopleByUID(peopleID string) (people entity.People, err error) {
-	if err := Db().Where("id = ?", peopleID).First(&people).Error; err != nil {
+func PeopleByUID(peopleUID string) (people entity.People, err error) {
+	if err := Db().Where("people_uid = ?", peopleUID).First(&people).Error; err != nil {
 		return people, err
 	}
 
@@ -32,10 +32,10 @@ func PeopleByUID(peopleID string) (people entity.People, err error) {
 }
 
 // PeopleCoverByUID returns a people preview file based on the uid.
-func PeopleCoverByUID(peopleID string) (file entity.File, err error) {
+func PeopleCoverByUID(peopleUID string) (file entity.File, err error) {
 	a := entity.People{}
 
-	if err := Db().Where("id = ?", peopleID).First(&a).Error; err != nil {
+	if err := Db().Where("people_uid = ?", peopleUID).First(&a).Error; err != nil {
 		return file, err
 	} /* //TODO
 		else if a.AlbumType != entity.AlbumDefault { // TODO: Optimize

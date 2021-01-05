@@ -106,7 +106,7 @@ func CreatePeople(router *gin.RouterGroup) {
 
 		UpdateClientConfig()
 
-		PublishPeopleEvent(EntityCreated, a.ID, c)
+		PublishPeopleEvent(EntityCreated, a.PeopleUID, c)
 
 		//TODO SaveAlbumAsYaml(*a)
 

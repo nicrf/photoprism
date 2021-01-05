@@ -4,6 +4,7 @@ package form
 type PeopleSearch struct {
 	Query    string `form:"q"`
 	ID       string `form:"id"`
+	UID      string `form:"uid"`
 	FullName string `form:"full_name"`
 	Category string `form:"category"`
 	Slug     string `form:"slug"`

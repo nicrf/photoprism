@@ -1,7 +1,9 @@
 package entity
 
 import (
+	"github.com/jinzhu/gorm"
 	"github.com/photoprism/photoprism/internal/form"
+	"github.com/photoprism/photoprism/pkg/rnd"
 	"github.com/ulule/deepcopier"
 	"sync"
 	"time"
@@ -10,7 +12,8 @@ import (
 var peopleMutex = sync.Mutex{}
 
 type People struct {
-	ID             string     `gorm:"type:VARBINARY(42);primary_key;auto_increment:false;" json:"PeopleUID" yaml:"PeopleUID"`
+	ID             uint       `gorm:"primary_key" json:"ID" yaml:"-"`
+	PeopleUID      string     `gorm:"type:VARBINARY(42);unique_index;" json:"UID" yaml:"UID"`
 	PeopleFullName string     `gorm:"type:VARBINARY(755);unique_index;" json:"FullName" yaml:"FullName"`
 	PeopleUserId   *string    `gorm:"type:VARCHAR(42);" json:"UserId" yaml:"UserId,omitempty"`
 	PeopleBoD      *time.Time `json:"BoD" yaml:"BoD,omitempty"`
@@ -25,7 +28,7 @@ type People struct {
 
 // UnknownPeople is PhotoPrism's default people.
 var UnknownPeople = People{
-	ID:             "zz",
+	PeopleUID:      "zz",
 	PeopleFullName: "Unknown",
 	PeopleUserId:   nil,
 	PeopleBoD:      nil,
@@ -43,19 +46,19 @@ func CreateUnknownPeople() {
 }
 
 // FindPlace finds a matching place or returns nil.
-func FindPeople(id string, fullname string) *People {
+func FindPeople(uid string, fullname string) *People {
 	people := People{}
 
 	if fullname == "" {
-		if err := Db().Where("id = ?", id).First(&people).Error; err != nil {
-			log.Debugf("peoples: failed finding %s", id)
+		if err := Db().Where("people_uid = ?", uid).First(&people).Error; err != nil {
+			log.Debugf("peoples: failed finding %s", uid)
 			return nil
 		} else {
 			return &people
 		}
 	}
 
-	if err := Db().Where("id = ? OR people_full_name = ?", id, fullname).First(&people).Error; err != nil {
+	if err := Db().Where("people_uid = ? OR people_full_name = ?", uid, fullname).First(&people).Error; err != nil {
 		return nil
 	} else {
 		return &people
@@ -69,6 +72,15 @@ func (m *People) Find() error {
 	}
 
 	return nil
+}
+
+// BeforeCreate creates a random UID if needed before inserting a new row to the database.
+func (m *People) BeforeCreate(scope *gorm.Scope) error {
+	if rnd.IsUID(m.PeopleUID, 'p') {
+		return nil
+	}
+
+	return scope.SetColumn("people_uid", rnd.PPID('p'))
 }
 
 // Create inserts a new row to the database.
@@ -111,13 +123,13 @@ func (m *People) Update(attr string, value interface{}) error {
 
 // FirstOrCreatePeople fetches an existing row, inserts a new row or nil in case of errors.
 func FirstOrCreatePeople(m *People) *People {
-	if m.ID == "" {
+	if m.PeopleUID == "" {
 		log.Errorf("places: people must not be empty (find or create)")
 		return nil
 	}
 
 	if m.PeopleFullName == "" {
-		log.Errorf("peoples: fullanme must not be empty (find or create people %s)", m.ID)
+		log.Errorf("peoples: fullanme must not be empty (find or create people %s)", m.PeopleUID)
 		return nil
 	}
 
@@ -130,7 +142,7 @@ func FirstOrCreatePeople(m *People) *People {
 	} else if err := Db().Where("id = ? OR people_full_name = ?", m.ID, m.PeopleFullName).First(&result).Error; err == nil {
 		return &result
 	} else {
-		log.Errorf("peoples: %s (create peoples %s)", createErr, m.ID)
+		log.Errorf("peoples: %s (create peoples %s)", createErr, m.PeopleUID)
 	}
 
 	return nil
@@ -138,7 +150,7 @@ func FirstOrCreatePeople(m *People) *People {
 
 // Unknown returns true if this is an unknown people
 func (m People) Unknown() bool {
-	return m.ID == "" || m.ID == UnknownPeople.ID
+	return m.PeopleUID == "" || m.PeopleUID == UnknownPeople.PeopleUID
 }
 
 // FullName returns people  FullName

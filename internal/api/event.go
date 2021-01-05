@@ -42,7 +42,7 @@ func PublishAlbumEvent(e EntityEvent, uid string, c *gin.Context) {
 }
 func PublishPeopleEvent(e EntityEvent, uid string, c *gin.Context) {
 	f := form.PeopleSearch{ID: uid}
-	result, err := query.PeopleByUID(f.ID) //TODO PeopleSearch?
+	result, err := query.PeopleByUID(f.UID) //TODO PeopleSearch?
 
 	if err != nil {
 		log.Error(err)

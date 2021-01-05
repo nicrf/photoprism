@@ -25,7 +25,7 @@ func (m PeoplesMap) Pointer(name string) *People {
 
 var PeopleFixtures = PeoplesMap{
 	"People1": {
-		ID:             s2.TokenPrefix + "85d1ea7d3278",
+		PeopleUID:      s2.TokenPrefix + "85d1ea7d3278",
 		PeopleUserId:   new(string),
 		PeopleFullName: "Teotihuacán, Mexico, Mexico",
 		PeopleBoD:      new(time.Time),
