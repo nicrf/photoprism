@@ -14,6 +14,7 @@ const (
 	ErrUserNotFound
 	ErrLabelNotFound
 	ErrAlbumNotFound
+	ErrPoepleNotFound
 	ErrPublic
 	ErrReadOnly
 	ErrUnauthorized
@@ -66,6 +67,9 @@ const (
 	MsgSelectionProtected
 	MsgAlbumsDeleted
 	MsgZipCreatedIn
+	MsgPeopleCreated
+	MsgPeopleSaved
+	MsgPeopleDeleted
 )
 
 var Messages = MessageMap{
@@ -83,6 +87,7 @@ var Messages = MessageMap{
 	ErrUserNotFound:       gettext("User not found"),
 	ErrLabelNotFound:      gettext("Label not found"),
 	ErrAlbumNotFound:      gettext("Album not found"),
+	ErrPoepleNotFound:     gettext("Poeple not found"),
 	ErrPublic:             gettext("Not available in public mode"),
 	ErrReadOnly:           gettext("not available in read-only mode"),
 	ErrUnauthorized:       gettext("Please log in and try again"),
@@ -136,4 +141,7 @@ var Messages = MessageMap{
 	MsgSelectionProtected:    gettext("Selection marked as private"),
 	MsgAlbumsDeleted:         gettext("Albums deleted"),
 	MsgZipCreatedIn:          gettext("Zip created in %d s"),
+	MsgPeopleCreated:         gettext("People created"),
+	MsgPeopleSaved:           gettext("People saved"),
+	MsgPeopleDeleted:         gettext("People %s deleted"),
 }

@@ -112,7 +112,7 @@
     "tar": "^6.0.5",
     "truncate": "^2.1.0",
     "url-loader": "^1.1.2",
-    "vue": "^2.6.12",
+    "vue": "^3.0.2",
     "vue-fullscreen": "^2.1.6",
     "vue-gettext": "^2.1.12",
     "vue-infinite-scroll": "^2.0.2",

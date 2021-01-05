@@ -40,6 +40,18 @@ func PublishAlbumEvent(e EntityEvent, uid string, c *gin.Context) {
 
 	event.PublishEntities("albums", string(e), result)
 }
+func PublishPeopleEvent(e EntityEvent, uid string, c *gin.Context) {
+	f := form.PeopleSearch{ID: uid}
+	result, err := query.PeopleByUID(f.ID) //TODO PeopleSearch?
+
+	if err != nil {
+		log.Error(err)
+		AbortUnexpected(c)
+		return
+	}
+
+	event.PublishEntities("peoples", string(e), result)
+}
 
 func PublishLabelEvent(e EntityEvent, uid string, c *gin.Context) {
 	f := form.LabelSearch{ID: uid}

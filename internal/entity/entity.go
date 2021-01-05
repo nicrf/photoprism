@@ -42,6 +42,7 @@ var Entities = Types{
 	"photos":          &Photo{},
 	"details":         &Details{},
 	"places":          &Place{},
+	"peoples":         &People{},
 	"cells":           &Cell{},
 	"cameras":         &Camera{},
 	"lenses":          &Lens{},
@@ -124,6 +125,7 @@ func CreateDefaultFixtures() {
 	CreateUnknownAddress()
 	CreateDefaultUsers()
 	CreateUnknownPlace()
+	CreateUnknownPeople()
 	CreateUnknownLocation()
 	CreateUnknownCountry()
 	CreateUnknownCamera()

@@ -43,7 +43,7 @@ type FeatureSettings struct {
 	Albums    bool `json:"albums" yaml:"Albums"`
 	Moments   bool `json:"moments" yaml:"Moments"`
 	Estimates bool `json:"estimates" yaml:"Estimates"`
-	People    bool `json:"people" yaml:"People"`
+	Persons   bool `json:"persons" yaml:"Persons"`
 	Labels    bool `json:"labels" yaml:"Labels"`
 	Places    bool `json:"places" yaml:"Places"`
 	Edit      bool `json:"edit" yaml:"Edit"`
@@ -125,7 +125,7 @@ func NewSettings() *Settings {
 			Albums:    true,
 			Moments:   true,
 			Estimates: true,
-			People:    true,
+			Persons:   true,
 			Labels:    true,
 			Places:    true,
 			Edit:      true,
