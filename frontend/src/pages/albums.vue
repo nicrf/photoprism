@@ -633,7 +633,7 @@ export default {
             const index = this.results.findIndex((m) => m.UID === values.UID);
 
             if (index === -1 && this.staticFilter.type === values.Type) {
-              this.results.unshift(new Album(values));
+              this.results.unshifft(new Album(values));
             }
           }
           break;

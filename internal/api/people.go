@@ -36,7 +36,7 @@ func GetPeoples(router *gin.RouterGroup) {
 
 		// Guest permissions are limited to shared albums.
 		if s.Guest() {
-			f.ID = s.Shares.Join(query.Or)
+			f.UID = s.Shares.Join(query.Or)
 		}
 
 		result, err := query.GetPeoples(0, 50)

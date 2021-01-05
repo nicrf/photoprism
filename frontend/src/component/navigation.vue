@@ -217,6 +217,23 @@
           </v-list-tile-content>
         </v-list-tile>
 
+
+        <v-list-tile :to="{ name: 'people' }" class="nav-calendar" @click.stop="">
+          <v-list-tile-action :title="$gettext('People')">
+            <v-icon>people</v-icon>
+          </v-list-tile-action>
+
+          <v-list-tile-content>
+            <v-list-tile-title>
+              <translate key="People">People</translate>
+              <span v-show="config.count.people > 0"
+                    :class="`nav-count ${rtl ? '--rtl' : ''}`">{{ config.count.people }}</span>
+            </v-list-tile-title>
+          </v-list-tile-content>
+        </v-list-tile>
+        Issues labeled help wanted / easy can be good (first) contributions. Our Developer Guide contains all
+        information necessary to get you started.
+
         <v-list-tile v-show="$config.feature('moments')" :to="{ name: 'moments' }" class="nav-moments"
                      @click.stop="">
           <v-list-tile-action :title="$gettext('Moments')">
